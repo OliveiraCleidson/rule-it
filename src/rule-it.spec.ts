@@ -79,4 +79,17 @@ describe('Rule It - Unit Test', () => {
       expect(sut.expression(operator, a, b)).toEqual(expected)
     })
   })
+
+  describe('Array Operators', () => {
+    it.each([
+      { operator: 'in', a: [1], b: [1,2,3,4,5], expected: true },
+      { operator: 'in', a: [1,2,3], b: [1,2,3,4,5], expected: true },
+      { operator: 'in', a: [7], b: [1,2,3,4,5], expected: false },
+      { operator: 'ni', a: [1], b: [1,2,3,4,5], expected: false },
+      { operator: 'ni', a: [1,2,3], b: [1,2,3,4,5], expected: false },
+      { operator: 'ni', a: [7], b: [1,2,3,4,5], expected: true },
+    ])('%# - %o', ({ operator, a, b, expected }) => {
+      expect(sut.expression(operator as 'in' | 'ni', a, b)).toEqual(expected)
+    })
+  })
 })
