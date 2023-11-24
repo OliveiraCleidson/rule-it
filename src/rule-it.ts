@@ -40,9 +40,9 @@ export class RuleIt {
       case 'le':
         return a <= b
       case 'in':
-        return (b as T[]).includes(a)
+        return (a as T[]).filter(x => !(b as T[]).includes(x)).length == 0
       case 'ni':
-        return !(b as T[]).includes(a)
+        return (a as T[]).filter(x => !(b as T[]).includes(x)).length != 0
       case 'like':
         return (a as string).includes(b as string)
       case 'between':
