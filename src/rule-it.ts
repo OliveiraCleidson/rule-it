@@ -46,6 +46,10 @@ export class RuleIt {
         return (a as string).includes(b as string)
       case 'between':
         return (a as Date) >= (b as Date)
+      case 'or':
+          return (a as boolean) || (b as boolean)
+      case 'xor':
+        return Boolean(Number((a as boolean)) ^ Number((b as boolean)))
       default:
         throw new Error('Operador inválido ou não registrado')
     }
