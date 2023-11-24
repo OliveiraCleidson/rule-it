@@ -56,4 +56,27 @@ describe('Rule It - Unit Test', () => {
       expect(sut.expression(operator, a, b)).toEqual(expected)
     })
   })
+
+  describe('Date Operators', () => {
+    const date = new Date()
+    const dateMinusOneHour = new Date()
+    dateMinusOneHour.setHours(date.getHours() - 1)
+
+    it.each([
+      { operator: 'eq', a: date, b: date, expected: true },
+      { operator: 'eq', a: date, b: dateMinusOneHour, expected: false },
+      { operator: 'ne', a: date, b: date, expected: false },
+      { operator: 'ne', a: date, b: dateMinusOneHour, expected: true },
+      { operator: 'gt', a: date, b: dateMinusOneHour, expected: true },
+      { operator: 'gt', a: dateMinusOneHour, b: date, expected: false },
+      { operator: 'ge', a: date, b: date, expected: true },
+      { operator: 'ge', a: dateMinusOneHour, b: date, expected: false },
+      { operator: 'lt', a: dateMinusOneHour, b: date, expected: true },
+      { operator: 'lt', a: date, b: dateMinusOneHour, expected: false },
+      { operator: 'le', a: date, b: date, expected: true },
+      { operator: 'le', a: date, b: dateMinusOneHour, expected: false }
+    ] as const)('%# - %o', ({ operator, a, b, expected }) => {
+      expect(sut.expression(operator, a, b)).toEqual(expected)
+    })
+  })
 })
