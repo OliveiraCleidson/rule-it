@@ -39,4 +39,21 @@ describe('Rule It - Unit Test', () => {
       expect(sut.expression(operator, a, b)).toEqual(expected)
     })
   })
+
+  describe('Boolean Operators', () => {
+    it.each([
+      { operator: 'eq', a: true, b: true, expected: true },
+      { operator: 'eq', a: true, b: false, expected: false },
+      { operator: 'ne', a: true, b: true, expected: false },
+      { operator: 'ne', a: true, b: false, expected: true },
+      { operator: 'or', a: true, b: true, expected: true },
+      { operator: 'or', a: true, b: false, expected: true },
+      { operator: 'or', a: false, b: false, expected: false },
+      { operator: 'xor', a: true, b: true, expected: false },
+      { operator: 'xor', a: true, b: false, expected: true },
+      { operator: 'xor', a: false, b: false, expected: false }
+    ] as const)('%# - %o', ({ operator, a, b, expected }) => {
+      expect(sut.expression(operator, a, b)).toEqual(expected)
+    })
+  })
 })
