@@ -13,9 +13,11 @@
  *      ni: não contido em
  *      like: semelhante a
  *      between: entre
- *
+ *      or: ou     
+ *      xor: ou exclusivo
+ * 
  */
-export type Operator = 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le' | 'in' | 'ni' | 'like' | 'between'
+export type Operator = 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le' | 'in' | 'ni' | 'like' | 'between' | 'or' | 'xor'
 
 const allowedStringOperators = ['eq', 'ne', 'like'] as const
 export type StringOperator = typeof allowedStringOperators[number]
@@ -23,7 +25,7 @@ export type StringOperator = typeof allowedStringOperators[number]
 const allowedNumberOperators = ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'between'] as const
 export type NumberOperator = typeof allowedNumberOperators[number]
 
-const allowedBooleanOperators = ['eq', 'ne'] as const
+const allowedBooleanOperators = ['eq', 'ne', 'or', 'xor'] as const
 export type BooleanOperator = typeof allowedBooleanOperators[number]
 
 const allowedDateOperators = ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'between'] as const

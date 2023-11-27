@@ -19,7 +19,8 @@ export class RuleIt {
     }
 
     const isArray = Array.isArray(a)
-    const type = isArray ? 'array' : typeofA
+    const isDate = a instanceof Date
+    const type = isArray ? 'array' : isDate ? 'date' : typeofA
     const allowedOperators = allowedMap.get(type)
     if (!((allowedOperators?.includes(operator)) ?? false)) {
       throw new Error(`Operador ${operator} não permitido para o tipo ${type}`)
@@ -27,9 +28,9 @@ export class RuleIt {
 
     switch (operator) {
       case 'eq':
-        return a === b
+        return isDate ? (a as Date).getTime() === (b as Date).getTime() : a === b
       case 'ne':
-        return a !== b
+        return isDate ? (a as Date).getTime() !== (b as Date).getTime() : a !== b
       case 'gt':
         return a > b
       case 'ge':
@@ -39,13 +40,17 @@ export class RuleIt {
       case 'le':
         return a <= b
       case 'in':
-        return (b as T[]).includes(a)
+        return (a as T[]).filter(x => !(b as T[]).includes(x)).length == 0
       case 'ni':
-        return !(b as T[]).includes(a)
+        return (a as T[]).filter(x => !(b as T[]).includes(x)).length != 0
       case 'like':
         return (a as string).includes(b as string)
       case 'between':
         return (a as Date) >= (b as Date)
+      case 'or':
+          return (a as boolean) || (b as boolean)
+      case 'xor':
+        return Boolean(Number((a as boolean)) ^ Number((b as boolean)))
       default:
         throw new Error('Operador inválido ou não registrado')
     }
